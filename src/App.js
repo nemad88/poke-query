@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
 import Dump from "./Dump";
+import { useQueryPokemons } from "./queries/useQueryPokemons";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +11,6 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  
 `;
 
 const Pagination = styled.div`
@@ -68,6 +68,8 @@ function App() {
   const [offset, setOffset] = useState(0);
   const [dumpVisible, setDumpVisible] = useState(false);
   const [dumpData, setDumpData] = useState({});
+
+  const query = useQueryPokemons();
 
   useEffect(() => {
     getPokemons(offset, limit).then((res) => {
