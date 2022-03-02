@@ -1,21 +1,29 @@
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import Pokemons from "./Pokemons";
+import PokemonDetails from "./PokemonDetails";
+import styled from "styled-components";
+
+const MenuItem = styled(Link)`
+  margin: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+`;
+
+const NavBar = styled.nav`
+  border-bottom: solid 1px;
+  padding-bottom: 1rem;
+`;
 
 const App = () => {
-  const a = 15;
-  console.log(a);
-
   const getNav = () => {
     return (
       <>
-        <nav
-          style={{
-            borderBottom: "solid 1px",
-            paddingBottom: "1rem",
-          }}
-        >
-          <Link to="/pokemons">Pokemons</Link> | <Link to="/other">Others</Link>
-        </nav>
+        <NavBar>
+          <MenuItem to="/pokemons">Pokemons</MenuItem>
+          <MenuItem to="/berries">Berries</MenuItem>
+        </NavBar>
         <Outlet />
       </>
     );
@@ -25,8 +33,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={getNav()}>
-          <Route path="pokemons" element={<Pokemons />} />
-          {/* <Route path="other" element={<div>OTHERS</div>} /> */}
+          <Route path="pokemons" element={<Pokemons />}></Route>
+          <Route path="pokemon/:pokemonId" element={<PokemonDetails />} />
+          <Route path="berries" element={<div>Berries</div>} />
         </Route>
       </Routes>
     </BrowserRouter>

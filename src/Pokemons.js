@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
+import { Link } from "react-router-dom";
 import Dump from "./Dump";
 import { useQueryPokemons } from "./queries/useQueryPokemons";
 
@@ -55,6 +56,16 @@ const PageButton = styled.button`
   padding: 4px;
   margin: 4px;
   cursor: pointer;
+`;
+
+const DetailsButton = styled(Link)`
+  color: white;
+`;
+
+const LeftPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 const Pokemons = () => {
@@ -139,10 +150,13 @@ const Pokemons = () => {
                 setSelectedPokemon(pokemon.name);
               }}
             >
-              <div>
+              <LeftPanel>
                 <div>#{details?.id}</div>
                 <div>{details?.species?.name}</div>
-              </div>
+                <DetailsButton to={`/pokemon/${details?.id}`}>
+                  details
+                </DetailsButton>
+              </LeftPanel>
 
               <img src={details?.sprites?.front_default} alt={"pokemon"} />
               <div>
