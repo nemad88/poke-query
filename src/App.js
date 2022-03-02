@@ -5,12 +5,18 @@ import Dump from "./Dump";
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
+  
 `;
 
 const Pagination = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const PokemonList = styled.div`
@@ -52,7 +58,7 @@ const PageButton = styled.button`
 `;
 
 function App() {
-  const limit = 50;
+  const limit = 20;
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonDetails, setPokemonDetails] = useState("");
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({});
