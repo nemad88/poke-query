@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
 import { Link } from "react-router-dom";
-import Dump from "./Dump";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +35,6 @@ const PokemonDetails = styled.div`
   margin: 4px;
   width: 280px;
   height: 100px;
-  cursor: pointer;
 
   .items {
     flex-direction: row;
@@ -70,14 +68,10 @@ const LeftPanel = styled.div`
 const Pokemons = () => {
   const limit = 20;
   const [pokemonList, setPokemonList] = useState([]);
-  const [pokemonDetails, setPokemonDetails] = useState("");
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({});
   const [listOfItemsImage, setListOfItemsImage] = useState({});
-  const [selectedPokemon, setSelectedPokemon] = useState("");
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [dumpVisible, setDumpVisible] = useState(false);
-  const [dumpData, setDumpData] = useState({});
 
   useEffect(() => {
     getPokemons(offset, limit).then((res) => {
@@ -106,45 +100,14 @@ const Pokemons = () => {
     });
   }, [offset]);
 
-  useEffect(() => {
-    if (selectedPokemon) {
-      getPokemonDetails(selectedPokemon).then((res) => {
-        setPokemonDetails(res.data);
-        setDumpData(res.data);
-      });
-    }
-  }, [selectedPokemon]);
-
   return (
     <Wrapper>
-      <div>
-        {pokemonDetails ? (
-          <div>
-            <h2>Details</h2>
-            <h3>Abilities</h3>
-            <div>
-              {pokemonDetails.abilities.map((ability) => (
-                <>
-                  <div>{ability.ability.name}</div>
-                </>
-              ))}
-              <img src={pokemonDetails.sprites.front_default} alt={"pokemon"} />
-            </div>
-          </div>
-        ) : null}
-      </div>
-
       <PokemonList>
         {pokemonList.map((pokemon) => {
           const details = listOfPokemonDetails[pokemon.name];
 
           return (
-            <PokemonDetails
-              key={pokemon.name}
-              onClick={() => {
-                setSelectedPokemon(pokemon.name);
-              }}
-            >
+            <PokemonDetails key={pokemon.name}>
               <LeftPanel>
                 <div>#{details?.id}</div>
                 <div>{details?.species?.name}</div>
@@ -187,11 +150,6 @@ const Pokemons = () => {
           </PageButton>
         ))}
       </Pagination>
-      <Dump
-        dumpData={dumpData}
-        dumpVisible={dumpVisible}
-        setDumpVisible={setDumpVisible}
-      />
     </Wrapper>
   );
 };
