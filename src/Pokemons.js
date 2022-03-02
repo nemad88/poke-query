@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
 import Dump from "./Dump";
+import { useQueryPokemons } from "./queries/useQueryPokemons";
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,18 +69,19 @@ const Pokemons = () => {
   const [dumpVisible, setDumpVisible] = useState(false);
   const [dumpData, setDumpData] = useState({});
 
+  const query = useQueryPokemons();
+
+  console.log(query);
+
   useEffect(() => {
     getPokemons(offset, limit).then((res) => {
       setPage(res.data.count / limit + 1);
       setPokemonList(res.data.results);
       res.data.results.forEach((pokemonData) => {
         getPokemonDetails(pokemonData.name).then((res) => {
-          console.log(res.data.held_items);
-
           if (res.data.held_items.length > 0) {
             res.data.held_items.forEach((item) => {
               getItem(item.item.name).then((res) => {
-                console.log(res.data.sprites.default);
                 setListOfItemsImage((list) => {
                   return {
                     ...list,
