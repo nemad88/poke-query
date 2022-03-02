@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPokemonDetails } from "./api/api";
+import { useQuaryPokemonDetails } from "./queries/useQuaryPokemonDetails";
 import ReactJson from "react-json-view";
 import styled from "styled-components";
 
@@ -26,6 +27,7 @@ const PokemonDetails = (props) => {
   const [details, setDetails] = useState({});
   let navigate = useNavigate();
   let params = useParams();
+  const query = useQuaryPokemonDetails(params.pokemonId);
 
   useEffect(() => {
     getPokemonDetails(params.pokemonId).then((res) => {

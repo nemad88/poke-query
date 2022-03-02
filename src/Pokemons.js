@@ -80,9 +80,7 @@ const Pokemons = () => {
   const [dumpVisible, setDumpVisible] = useState(false);
   const [dumpData, setDumpData] = useState({});
 
-  const query = useQueryPokemons();
-
-  console.log(query);
+  const { data } = useQueryPokemons();
 
   useEffect(() => {
     getPokemons(offset, limit).then((res) => {
@@ -153,7 +151,7 @@ const Pokemons = () => {
               <LeftPanel>
                 <div>#{details?.id}</div>
                 <div>{details?.species?.name}</div>
-                <DetailsButton to={`/pokemon/${details?.id}`}>
+                <DetailsButton to={`/pokemon/${details?.species?.name}`}>
                   details
                 </DetailsButton>
               </LeftPanel>
