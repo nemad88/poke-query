@@ -4,7 +4,23 @@ import { getPokemonDetails } from "./api/api";
 import ReactJson from "react-json-view";
 import styled from "styled-components";
 
-const BackButton = styled.button``;
+const BackButton = styled.button`
+  padding: 8px;
+  margin: 16px;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100vh;
+`;
+
+const Details = styled.div`
+  padding: 16px;
+`;
 
 const PokemonDetails = (props) => {
   const [details, setDetails] = useState({});
@@ -18,8 +34,10 @@ const PokemonDetails = (props) => {
   }, [params]);
 
   return (
-    <div>
-      <ReactJson src={details} collapsed={true} />
+    <Wrapper>
+      <Details>
+        <ReactJson src={details} collapsed={true} />
+      </Details>
       <BackButton
         onClick={() => {
           navigate(-1);
@@ -27,7 +45,7 @@ const PokemonDetails = (props) => {
       >
         Back
       </BackButton>
-    </div>
+    </Wrapper>
   );
 };
 

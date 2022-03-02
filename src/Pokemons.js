@@ -7,10 +7,9 @@ import { useQueryPokemons } from "./queries/useQueryPokemons";
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  padding: 40px;
   height: 100vh;
 `;
 
@@ -18,6 +17,7 @@ const Pagination = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 16px;
 `;
 
 const PokemonList = styled.div`
