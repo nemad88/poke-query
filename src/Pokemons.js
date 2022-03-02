@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
 import { Link } from "react-router-dom";
 import { useQueryPokemons } from "./queries/useQueryPokemons";
+import { BallTriangle } from "react-loader-spinner";
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,7 +68,7 @@ const LeftPanel = styled.div`
 `;
 
 const Pokemons = () => {
-  const limit = 20;
+  const limit = 50;
   const [pokemonList, setPokemonList] = useState([]);
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({});
   const [listOfItemsImage, setListOfItemsImage] = useState({});
@@ -103,6 +104,10 @@ const Pokemons = () => {
     });
   }, [offset]);
 
+  if (pokemonList.length === 0) {
+    <BallTriangle heigth="50" width="50" color="white" />;
+  }
+
   return (
     <Wrapper>
       <PokemonList>
@@ -111,13 +116,17 @@ const Pokemons = () => {
 
           return (
             <PokemonDetails key={pokemon.name}>
-              <LeftPanel>
-                <div>#{details?.id}</div>
-                <div>{details?.species?.name}</div>
-                <DetailsButton to={`/pokemon/${details?.species?.name}`}>
-                  details
-                </DetailsButton>
-              </LeftPanel>
+              {details ? (
+                <LeftPanel>
+                  <div>#{details.id}</div>
+                  <div>{details.species.name}</div>
+                  <DetailsButton to={`/pokemon/${details?.id}`}>
+                    details
+                  </DetailsButton>
+                </LeftPanel>
+              ) : (
+                <BallTriangle heigth="50" width="50" color="white" />
+              )}
 
               <img src={details?.sprites?.front_default} alt={"pokemon"} />
               <div>
@@ -126,12 +135,14 @@ const Pokemons = () => {
                   {details?.held_items.map((item) => {
                     const imageUrl = listOfItemsImage[item.item.name];
 
-                    return (
+                    return imageUrl ? (
                       <img
                         key={item.item.name}
                         src={imageUrl}
                         alt={item.item.name}
                       />
+                    ) : (
+                      <BallTriangle heigth="50" width="50" color="white" />
                     );
                   })}
                 </div>
