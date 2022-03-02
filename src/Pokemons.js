@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPokemons, getPokemonDetails, getItem } from "./api/api";
+import { Link } from "react-router-dom";
 import Dump from "./Dump";
 
 const Wrapper = styled.div`
@@ -56,6 +57,16 @@ const PageButton = styled.button`
   cursor: pointer;
 `;
 
+const DetailsButton = styled(Link)`
+  color: white;
+`;
+
+const LeftPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
 const Pokemons = () => {
   const limit = 20;
   const [pokemonList, setPokemonList] = useState([]);
@@ -74,12 +85,9 @@ const Pokemons = () => {
       setPokemonList(res.data.results);
       res.data.results.forEach((pokemonData) => {
         getPokemonDetails(pokemonData.name).then((res) => {
-          console.log(res.data.held_items);
-
           if (res.data.held_items.length > 0) {
             res.data.held_items.forEach((item) => {
               getItem(item.item.name).then((res) => {
-                console.log(res.data.sprites.default);
                 setListOfItemsImage((list) => {
                   return {
                     ...list,
@@ -137,10 +145,13 @@ const Pokemons = () => {
                 setSelectedPokemon(pokemon.name);
               }}
             >
-              <div>
+              <LeftPanel>
                 <div>#{details?.id}</div>
                 <div>{details?.species?.name}</div>
-              </div>
+                <DetailsButton to={`/pokemon/${details?.id}`}>
+                  details
+                </DetailsButton>
+              </LeftPanel>
 
               <img src={details?.sprites?.front_default} alt={"pokemon"} />
               <div>
