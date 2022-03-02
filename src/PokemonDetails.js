@@ -27,18 +27,12 @@ const PokemonDetails = (props) => {
   const [details, setDetails] = useState({});
   let navigate = useNavigate();
   let params = useParams();
-  const query = useQuaryPokemonDetails(params.pokemonId);
-
-  useEffect(() => {
-    getPokemonDetails(params.pokemonId).then((res) => {
-      setDetails(res.data);
-    });
-  }, [params]);
+  const { data } = useQuaryPokemonDetails(params.pokemonId);
 
   return (
     <Wrapper>
       <Details>
-        <ReactJson src={details} collapsed={true} />
+        <ReactJson src={data} collapsed={true} />
       </Details>
       <BackButton
         onClick={() => {
