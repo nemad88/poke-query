@@ -1,16 +1,25 @@
 import { useQuery } from "react-query";
 import { getPokemonDetails } from "../api/api";
 
-export const useQuaryPokemonDetails = (pokemonName) => {
-  return useQuery(["pokemon", pokemonName], () =>
-    getPokemonDetails(pokemonName).then(async (res) => {
-      // Synt loading time
-      // await new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     resolve("foo");
-      //   }, 3000);
-      // });
-      return res.data;
-    })
+export const useQuaryPokemonDetails = (pokemonName, select) => {
+  return useQuery(
+    ["pokemon", pokemonName],
+    () => {
+      return getPokemonDetails(pokemonName).then(async (res) => {
+        console.log("fetch");
+        //Synt loading time
+        // await new Promise((resolve, reject) => {
+        //   setTimeout(() => {
+        //     resolve("foo");
+        //   }, 100);
+        // });
+        return res.data;
+      });
+    },
+    {
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+      select,
+    }
   );
 };

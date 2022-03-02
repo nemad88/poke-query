@@ -12,6 +12,12 @@ export const getPokemons = (offset, limit) => {
 };
 
 export const getPokemonDetails = (pokemonName) => {
+  // SYNT ERROR
+  // if (pokemonName === "raticate") {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => reject(new Error("Whoops!")), 1000);
+  //   });
+  // }
   return axios.get(`${baseURL}/pokemon/${pokemonName}`);
 };
 
