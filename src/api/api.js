@@ -24,3 +24,7 @@ export const getPokemonDetails = (pokemonName) => {
 export const getItem = (itemName) => {
   return axios.get(`${baseURL}/item/${itemName}`);
 };
+
+export const getMoveDetails = (url) => {
+  return axios.get(`${url}`);
+};
