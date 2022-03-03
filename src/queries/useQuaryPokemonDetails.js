@@ -6,7 +6,6 @@ export const useQuaryPokemonDetails = (pokemonName, select) => {
     ["pokemon", pokemonName],
     () => {
       return getPokemonDetails(pokemonName).then(async (res) => {
-        console.log("fetch");
         //Synt loading time
         // await new Promise((resolve, reject) => {
         //   setTimeout(() => {

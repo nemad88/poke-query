@@ -52,7 +52,7 @@ const PokemonDetails = () => {
         {results.length > 0
           ? results.map((result) => {
               if (result.isSuccess) {
-                return <div>{result.data.name}</div>;
+                return <div key={result.data.name}>{result.data.name}</div>;
               }
               return null;
             })
